@@ -30,13 +30,24 @@ public class OnlineAPI extends HttpServlet {
 	
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		String output = AppObj.addAppointment(
-				request.getParameter("date"),
-				 request.getParameter("time"),
-				 Integer.parseInt(request.getParameter("patient_id")),
-				 Integer.parseInt(request.getParameter("doctor_id ")),
-				 Integer.parseInt(request.getParameter("hospital_id")));
 		
+		int PatientID =Integer.parseInt(request.getParameter("apppid"));
+		int DoctorId = Integer.parseInt(request.getParameter("appdid"));
+		int HospitalID =Integer.parseInt(request.getParameter("apphid"));		
+		
+		
+		System.out.println(PatientID);
+		System.out.println(DoctorId);
+		System.out.println(HospitalID);
+		
+		String output = AppObj.addAppointment(
+				request.getParameter("appDate"),
+				request.getParameter("appTime"),
+				PatientID,
+				DoctorId,
+				HospitalID);
+		
+		System.out.println("output "+output);
 		response.getWriter().write(output);
 	}
 
@@ -45,9 +56,22 @@ public class OnlineAPI extends HttpServlet {
 		// TODO Auto-generated method stub
 		Map paras = getParasMap(request); 
 		
-		String output = AppObj.UpdateAppointment(paras.get("date").toString(),
-				 paras.get("time").toString(),
-				 paras.get("apmnt_id").toString()); 
+		String appid = paras.get("hidAppIDSave").toString();
+		String date = paras.get("appDate").toString();
+		String time = paras.get("appTime").toString();
+		
+		System.out.println(appid);
+		System.out.println(date);
+		System.out.println(time);
+		
+		
+		String output = AppObj.UpdateAppointment(
+				
+				date,
+				time,
+				appid); 
+		
+		System.out.println(output);
 		
 		response.getWriter().write(output);
 	}
@@ -57,9 +81,13 @@ public class OnlineAPI extends HttpServlet {
 		// TODO Auto-generated method stub
 		Map paras = getParasMap(request);
 		
-		String output = AppObj.DeleteAppointment(paras.get("apmnt_id").toString()); 
+		String id = paras.get("AppID").toString();
+		System.out.println(id);
 		
+		String output = AppObj.DeleteAppointment(id); 
+				
 		response.getWriter().write(output);
+		System.out.println("delete output"+output);
 	}
 	
 	private static Map getParasMap(HttpServletRequest request)

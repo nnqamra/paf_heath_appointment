@@ -14,7 +14,7 @@ $(document).on("click", "#btnSave", function(event) {
 	$("#alertError").hide();
 
 	// Form validation-------------------
-	var status = validateItemForm();
+	var status = validateAppForm();
 	if (status != true) {
 		$("#alertError").text(status);
 		$("#alertError").show();
@@ -30,7 +30,7 @@ $(document).on("click", "#btnSave", function(event) {
 		data : $("#formApp").serialize(),
 		dataType : "text",
 		complete : function(response, status) {
-			onItemSaveComplete(response.responseText, status);
+			onAppSaveComplete(response.responseText, status);
 		}
 	});
 });
@@ -70,21 +70,24 @@ $(document).on(
 		function(event) {
 			$("#hidAppIDSave").val(
 					$(this).closest("tr").find('#hidAppIDUpdate').val());
-			$("#date").val($(this).closest("tr").find('td:eq(0)').text());
-			$("#time").val($(this).closest("tr").find('td:eq(1)').text());
-			$("#apmnt_id").val($(this).closest("tr").find('td:eq(2)').text());
+			$("#appDate").val($(this).closest("tr").find('td:eq(1)').text());
+			$("#appTime").val($(this).closest("tr").find('td:eq(2)').text());
+			$("#apppid").val($(this).closest("tr").find('td:eq(3)').text());
+			$("#appdid").val($(this).closest("tr").find('td:eq(4)').text());
+			$("#apphid").val($(this).closest("tr").find('td:eq(5)').text());
 			
 		});
 
 
 //REMOVE==========================================
-$(document).on("click", ".btnRemove", function(event) {
+$(document).on("click",".btnRemove",function(event) {
 	$.ajax({
 		url : "OnlineAPI",
 		type : "DELETE",
-		data : "apmnt_id=" + $(this).data("AppID"),
+		data : "AppID=" + $(this).data("Appid"),
 		dataType : "text",
-		complete : function(response, status) {
+		complete : function(response, status)
+		{
 			onAppDeleteComplete(response.responseText, status);
 		}
 	});
@@ -113,7 +116,7 @@ function onAppDeleteComplete(response, status) {
 
 
 //CLIENTMODEL=========================================================================
-function validateItemForm() {
+function validateAppForm() {
 	// Date
 	if ($("#appDate").val().trim() == "") {
 		return "Select a date.";

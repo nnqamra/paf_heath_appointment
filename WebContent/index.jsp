@@ -40,7 +40,7 @@
 	<div id="alertError" class="alert alert-danger"></div>
 
 	<br>
-	<div id="divItemsGrid">
+	<div id="divAppGrid">
  		<%
  			online AppObj = new online();
  			out.print(AppObj.ReadAppointment());

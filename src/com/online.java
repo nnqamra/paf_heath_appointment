@@ -47,18 +47,22 @@ public class online {
 			pstmnt.setInt(5, hid);
 
 			pstmnt.execute();
+			
+			System.out.println(pid);
+			System.out.println(did);
+			System.out.println(hid);
 			con.close();
 			
 			String newAppointment = ReadAppointment();
 			output = "{\"status\":\"success\", \"data\": \"" + newAppointment + "\"}";
-			return "Appointment added successfully";
+			//return "Appointment added successfully";
 
 		} catch (SQLException e) {
 			output = "{\"status\":\"error\", \"data\":" + " \"Error while inserting the Appointment.\"}";
-			return "Error occured during adding an Appointment\n" + e.getMessage();
+			//return "Error occured during adding an Appointment\n" + e.getMessage();
 		}
 
-		//return output; 
+		return output; 
 	}
 
 	public String ReadAppointment() {
@@ -119,9 +123,11 @@ public class online {
 		} 
 		catch (SQLException e) {
 			e.printStackTrace();
-			return "Error occured during retrieving data";
+			
+			output = "{\"status\":\"error\", \"data\":" + " \"Error occured during retrieving data\"}";
+			//return "Error occured during retrieving data";
 		}
-		//return output; 
+		return output; 
 	}
 
 	public String UpdateAppointment(String date, String time, String AppID) {
@@ -175,21 +181,21 @@ public class online {
 
 			PreparedStatement pstmnt = con.prepareStatement(Deletequery);
 			//pstmnt.setInt(1, AppID);
-			pstmnt.setInt(1, Integer.parseInt(AppID)); 
+			pstmnt.setInt(1,Integer.parseInt(AppID)); 
 			
 			pstmnt.execute();
 			con.close();
 			
 			String newAppointment = ReadAppointment();
 			output = "{\"status\":\"success\", \"data\": \"" + newAppointment + "\"}";
-			return "Appoinment Deleted successfully";
+			//return "Appointment Deleted successfully";
 
 		} catch (SQLException e) {
 
-			output = "{\"status\":\"error\", \"data\":" + " \"Error while updating the Appointment.\"}";
-			return "Error occurrd during Deleting\n" + e.getMessage();
+			output = "{\"status\":\"error\", \"data\":" + " \"Error while deleting the Appointment.\"}";
+			//return "Error occurrd during Deleting\n" + e.getMessage();
 		}
-		//return output; 
+		return output; 
 	}
 
 }
